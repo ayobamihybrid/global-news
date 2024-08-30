@@ -12,9 +12,7 @@
         <ul class="flex gap-4 items-center">
           <li class="text-[18px]"><NuxtLink to="/">Home</NuxtLink></li>
           <li class="text-[18px]"><NuxtLink to="/about">About</NuxtLink></li>
-          <li class="text-[18px]">
-            <NuxtLink to="/">Latest news</NuxtLink>
-          </li>
+          <i class="pi pi-user text-[25px] cursor-pointer"></i>
         </ul>
       </nav>
     </header>
@@ -27,8 +25,8 @@
       class="absolute w-full bottom-0 shadow-sm bg-white flex justify-center"
     >
       <nav class="max-w-[2000px] mx-auto py-4 px-9 flex justify-between">
-        <NuxtLink to="/" class="text-[24px] font-bold">
-          <p>View repo</p>
+        <NuxtLink to="/https://github.com/ayobamihybrid/global-news">
+          <p class="text-[24px] font-bold">View repo</p>
         </NuxtLink>
       </nav>
     </footer>
