@@ -6,10 +6,10 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   css: ['primeicons/primeicons.css'],
 
-  serverHandlers: [
-    {
-      route: '/api/news',
-      handler: '~/server/api/news.js',
-    },
-  ],
+  // serverHandlers: [
+  //   {
+  //     route: '/api/news',
+  //     handler: '~/server/api/news.js',
+  //   },
+  // ],
 });
