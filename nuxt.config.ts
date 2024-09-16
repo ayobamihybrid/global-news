@@ -5,4 +5,11 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss'],
   css: ['primeicons/primeicons.css'],
+
+  serverHandlers: [
+    {
+      route: '/api/news',
+      handler: '~/server/api/news.js',
+    },
+  ],
 });

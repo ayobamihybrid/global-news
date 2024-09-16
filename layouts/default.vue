@@ -22,12 +22,16 @@
     </div>
 
     <footer
-      class="absolute w-full bottom-0 shadow-sm bg-white flex justify-center"
+      class="absolute w-full bottom-[-50px] shadow-sm bg-white flex justify-center"
     >
       <nav class="max-w-[2000px] mx-auto py-4 px-9 flex justify-between">
-        <NuxtLink to="/https://github.com/ayobamihybrid/global-news">
+        <!-- <NuxtLink to="/https://github.com/ayobamihybrid/global-news">
           <p class="text-[24px] font-bold">View repo</p>
-        </NuxtLink>
+        </NuxtLink> -->
+
+        <a href="https://github.com/ayobamihybrid/global-news" target="_blank"
+          >View repo</a
+        >
       </nav>
     </footer>
   </div>

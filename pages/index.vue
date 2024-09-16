@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 
 const uri =
-  'https://newsapi.org/v2/everything?q=tesla&from=2024-07-29&sortBy=publishedAt&apiKey=708479740d004a9c95f336573c72d503';
+  'https://newsapi.org/v2/everything?q=tesla&from=2024-08-29&sortBy=publishedAt&apiKey=708479740d004a9c95f336573c72d503';
 const { data: news, pending, error } = await useFetch(uri);
 
 const currentPage = ref(1);
@@ -62,20 +62,21 @@ function prevPage() {
       >
         <div class="spinner"></div>
       </div>
+
       <div v-else-if="error" class="col-span-full">
         Error: {{ error.message }}
       </div>
+
       <div v-else-if="paginatedNews.length === 0" class="col-span-full">
         No results found.
       </div>
+
       <div v-else v-for="n in paginatedNews" :key="n.url">
         <NewsCard :news="n" />
       </div>
     </div>
 
-    <div
-      class="absolute w-full bottom-[50px] flex justify-center items-center gap-x-4"
-    >
+    <div class="w-full mt-9 flex justify-center items-center gap-x-4">
       <button
         @click="prevPage"
         :disabled="currentPage === 1"

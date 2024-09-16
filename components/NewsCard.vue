@@ -11,7 +11,14 @@
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-1">
         <i class="pi pi-user text-[#12b488] cursor-pointer"></i>
-        <p>{{ news.author }}</p>
+
+        <p>
+          {{
+            news.author.length > 30
+              ? news.author.slice(0, 30) + '...'
+              : news.author
+          }}
+        </p>
       </div>
 
       <NuxtLink :to="{ name: 'news-title', params: { title: news.title } }">

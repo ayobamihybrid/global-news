@@ -11,6 +11,6 @@ body {
     @apply bg-[#12b488] text-[#fff] px-3 py-2 rounded-md text-sm inline-block;
   }
   .card {
-    @apply p-3 rounded-md bg-[#fff] shadow-md h-full;
+    @apply p-3 rounded-md bg-[#fff] shadow-md h-[400px];
   }
 }
