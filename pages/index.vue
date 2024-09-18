@@ -10,13 +10,13 @@ let error = ref(null);
 
 onMounted(async () => {
   try {
-    const response = await fetch(uri);
+    const response = await fetch('/api/news');
+    console.log('Response status:', response.status); // Log the response status
     const data = await response.json();
-    console.log('Raw API response:', data);
+    console.log('Received data:', data);
 
-    if (data && data.articles && data.articles.length > 0) {
+    if (data && data.articles && Array.isArray(data.articles)) {
       news.value = data.articles;
-      console.log('Processed news data:', news.value);
       pending.value = false;
     } else {
       error.value = new Error('No articles found in the response');
@@ -35,21 +35,21 @@ const itemsPerPage = 12;
 const searchQuery = ref('');
 
 const filteredNews = computed(() => {
-  if (!news.value || !news.value.articles) return [];
-  return news.value.articles.filter((article) =>
+  if (!news.value || !Array.isArray(news.value)) return [];
+  return news.value.filter((article) =>
     article?.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
 
 const paginatedNews = computed(() => {
-  if (!news.value || !Array.isArray(news.value)) return [];
+  if (!filteredNews.value || !Array.isArray(filteredNews.value)) return [];
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return news.value.slice(start, end);
+  return filteredNews.value.slice(start, end);
 });
 
 const newsAvailable = computed(() => {
-  return news.value && Array.isArray(news.value) && news.value.length > 0;
+  return Array.isArray(news.value) && news.value.length > 0;
 });
 
 const totalPages = computed(() => {
