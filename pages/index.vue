@@ -1,9 +1,33 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 const uri =
-  'https://newsapi.org/v2/everything?q=tesla&from=2024-08-29&sortBy=publishedAt&apiKey=708479740d004a9c95f336573c72d503';
-const { data: news, pending, error } = await useFetch(uri);
+  'https://newsapi.org/v2/everything?q=tesla&from=2024-08-17&sortBy=publishedAt&apiKey=1faf257ab7724e57b4500211c9067770';
+
+let news = ref(null);
+let pending = ref(true);
+let error = ref(null);
+
+onMounted(async () => {
+  try {
+    const response = await fetch(uri);
+    const data = await response.json();
+    console.log('Raw API response:', data);
+
+    if (data && data.articles && data.articles.length > 0) {
+      news.value = data.articles;
+      console.log('Processed news data:', news.value);
+      pending.value = false;
+    } else {
+      error.value = new Error('No articles found in the response');
+      pending.value = false;
+    }
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    error.value = err;
+    pending.value = false;
+  }
+});
 
 const currentPage = ref(1);
 const itemsPerPage = 12;
@@ -13,19 +37,25 @@ const searchQuery = ref('');
 const filteredNews = computed(() => {
   if (!news.value || !news.value.articles) return [];
   return news.value.articles.filter((article) =>
-    article.title.toLowerCase().includes(searchQuery.value.toLowerCase())
+    article?.title?.toLowerCase().includes(searchQuery.value.toLowerCase())
   );
 });
 
 const paginatedNews = computed(() => {
+  if (!news.value || !Array.isArray(news.value)) return [];
   const start = (currentPage.value - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  return filteredNews.value.slice(start, end);
+  return news.value.slice(start, end);
 });
 
-const totalPages = computed(() =>
-  Math.ceil(filteredNews.value.length / itemsPerPage)
-);
+const newsAvailable = computed(() => {
+  return news.value && Array.isArray(news.value) && news.value.length > 0;
+});
+
+const totalPages = computed(() => {
+  if (!filteredNews.value) return 0;
+  return Math.ceil(filteredNews.value.length / itemsPerPage);
+});
 
 function nextPage() {
   if (currentPage.value < totalPages.value) {
@@ -54,7 +84,7 @@ function prevPage() {
     <h2 class="text-[30px] font-bold my-2">Latest posts</h2>
 
     <div
-      class="grid grid-cols-1 md:grid-cols-2 xl:grids-col-3 2xl:grid-cols-4 gap-5"
+      class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5"
     >
       <div
         v-if="pending"
@@ -67,13 +97,17 @@ function prevPage() {
         Error: {{ error.message }}
       </div>
 
-      <div v-else-if="paginatedNews.length === 0" class="col-span-full">
-        No results found.
+      <div v-else-if="!newsAvailable" class="col-span-full">
+        <p class="text-center">No news available</p>
       </div>
 
-      <div v-else v-for="n in paginatedNews" :key="n.url">
-        <NewsCard :news="n" />
-      </div>
+      <template v-else>
+        <NewsCard
+          v-for="(article, index) in paginatedNews"
+          :key="index"
+          :news="article"
+        />
+      </template>
     </div>
 
     <div class="w-full mt-9 flex justify-center items-center gap-x-4">

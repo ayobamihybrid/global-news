@@ -12,7 +12,7 @@ onMounted(async () => {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${encodeURIComponent(
         title
-      )}&apiKey=708479740d004a9c95f336573c72d503`
+      )}&apiKey=1faf257ab7724e57b4500211c9067770`
     );
     const data = await response.json();
 
@@ -26,23 +26,26 @@ onMounted(async () => {
 </script>
 
 <template>
-  <NuxtLink to="/" class="my-5 flex items-center gap-1">
+  <NuxtLink to="/" class="mb-2 flex items-center gap-1">
     <i class="pi pi-arrow-left"></i>
     <p>Back to home</p>
   </NuxtLink>
 
-  <div class="w-full min-h-[100vh] flex justify-center items-center">
-    <div class="card max-w-[1500px]" v-if="article">
+  <div class="w-full min-h-[100vh] mt-9 flex justify-center">
+    <div
+      class="max-w-[1000px] p-3 rounded-md bg-[#fff] shadow-md"
+      v-if="article"
+    >
       <img :src="`${article.urlToImage}`" class="w-[100%] h-[70%]" />
 
-      <p class="text-[30px] font-bold my-4">
+      <p class="text-[18px] lg:text-[20px] xl:text-[24px] font-bold my-4">
         {{ article.title }}
       </p>
 
       <div class="my-5 flex justify-between items-center">
         <div class="flex items-center gap-1">
-          <i class="pi pi-user text-[#12b488] text-[40px] cursor-pointer"></i>
-          <p class="text-[20px] font-bold">{{ article.author }}</p>
+          <i class="pi pi-user text-[#12b488] text-[30px] cursor-pointer"></i>
+          <p class="text-[18px] font-bold">{{ article.author }}</p>
         </div>
 
         <p class="text-center text-sm">
