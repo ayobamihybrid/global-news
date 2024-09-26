@@ -2,7 +2,7 @@ import { $fetch } from 'ofetch';
 
 export default defineEventHandler(async (event) => {
   console.log('API route hit');
-  const url = `https://newsapi.org/v2/everything?q=tesla&from=2024-08-17&sortBy=publishedAt&apiKey=1faf257ab7724e57b4500211c9067770`;
+  const url = `https://newsapi.org/v2/everything?q=tesla&from=2024-09-12&sortBy=publishedAt&apiKey=1faf257ab7724e57b4500211c9067770`;
 
   try {
     console.log('Fetching from URL:', url);
